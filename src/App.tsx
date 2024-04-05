@@ -15,10 +15,7 @@ const ForgotPass = React.lazy(() => import("./pages/auth/ForgotPass"));
 const UserDashboard  =React.lazy(() => import("./layout/UserDashboard"));
 const UserHome  = React.lazy(()=>import("./pages/user/userDashboard/UserHome"))
 const AdminDashboard = React.lazy(()=>import("./layout/AdminDashboard"))
-const TestForm = React.lazy(()=>import("./test/TestForm"))
-const Tabletest = React.lazy(()=>import("./test/Tabletest"))
-const User = React.lazy(()=>import("./test/User"))
-const ReactTable  = React.lazy(()=>import("./test/ReactTable"))
+
 const ErrorPage  = React.lazy(()=>import("./components/dashboard/common/ErrorPage"))
 
 
@@ -41,10 +38,7 @@ function App() {
       
     
         {/* ==================test==================== */}
-        <Route path="/testuser" element={<User />} />
-        <Route path="/test" element={<TestForm />} />
-        <Route path="/testtable" element={<Tabletest />} />
-        <Route path='/table' element={<ReactTable/>}/>
+      
 
 
         {/* ===========================auth====================== */}
