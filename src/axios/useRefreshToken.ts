@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { axiosCustom } from './axios';
 
 const useRefreshToken = () => {
     const { setAuth  , logout} = useAuth();
@@ -9,7 +10,7 @@ const useRefreshToken = () => {
     const refresh = async () => {
         try{
 
-            const response = await axios.get('http://localhost:5000/api/auth/refresh', {
+            const response = await axiosCustom.get('http://localhost:5000/api/auth/refresh', {
                 withCredentials: true
             });
 

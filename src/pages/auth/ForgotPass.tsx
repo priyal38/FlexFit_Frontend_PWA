@@ -5,12 +5,13 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import imagelogin from '../../images/about.jpg'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { axiosCustom } from '../../axios/axios';
 import toast, {Toaster} from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/LandingPage/Header';
 import Footer from '../../components/LandingPage/Footer';
+import { axiosPrivate } from '../../axios/axios';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -33,7 +34,7 @@ const ForgotPass = () => {
 
   
  
-  
+
 
   const onSubmit = async (data:FormInput) => {
   
@@ -41,7 +42,7 @@ const ForgotPass = () => {
 
 
 
-      const response = await axios.post('http://localhost:5000/api/auth/forgot', data);
+      const response = await axiosCustom.post('/auth/forgot', data);
 
     
       if (response.status === 200) {

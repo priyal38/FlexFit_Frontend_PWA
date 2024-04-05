@@ -14,6 +14,7 @@ import Footer from '../../components/LandingPage/Footer';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { axiosCustom } from '../../axios/axios';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -35,11 +36,11 @@ const Login = () => {
 
   const { auth, setAuth } = useAuth();
 
-  // useEffect(() => {
-  //   if (auth.user.email) {
-  //     navigate('/')
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (auth.user.email) {
+      navigate('/')
+    }
+  }, [])
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword); // Toggle showPassword state
@@ -49,7 +50,7 @@ const Login = () => {
 
     try {
 
-      const response = await axios.post('http://localhost:5000/api/auth/login', data, {
+      const response = await axiosCustom.post('/auth/login', data, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });

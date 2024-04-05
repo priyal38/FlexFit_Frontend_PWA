@@ -12,6 +12,8 @@ import Header from '../../components/LandingPage/Header';
 import Footer from '../../components/LandingPage/Footer';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
+import { axiosCustom } from '../../axios/axios';
+
 const schema = yup.object().shape({
     firstname: yup.string().required('First name is required'),
     lastname: yup.string().required('Last name is required'),
@@ -38,6 +40,7 @@ const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
+  
     const handleTogglePassword = () => {
         setShowPassword(!showPassword); // Toggle showPassword state
     };
@@ -51,7 +54,7 @@ const SignUp = () => {
         const { confirmPassword, ...formData } = data;
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/signup', formData);
+            const response = await axiosCustom.post('/auth/signup', formData);
             console.log(response);
             if (response.status === 200) {
                 navigate('/login');
