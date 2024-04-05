@@ -54,7 +54,7 @@ navigate('/user')
       >
       
         <span>
-        <img src={auth.user.image ? `http://localhost:5000/${auth.user.image}` : defaultuser} className=' className="h-9 w-9 rounded-full border-1 border-gray-800 mx-auto my-4"'/>
+        <img src={auth.user.image ? `https://flexfit-backend.onrender.com/${auth.user.image}` : defaultuser} className=' className="h-9 w-9 rounded-full border-1 border-gray-800 mx-auto my-4"'/>
        
         </span>
 

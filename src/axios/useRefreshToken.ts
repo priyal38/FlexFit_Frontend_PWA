@@ -10,7 +10,7 @@ const useRefreshToken = () => {
     const refresh = async () => {
         try{
 
-            const response = await axiosCustom.get('http://localhost:5000/api/auth/refresh', {
+            const response = await axiosCustom.get('/auth/refresh', {
                 withCredentials: true
             });
 

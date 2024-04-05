@@ -19,7 +19,7 @@ const BlogCard = ({ data} :Props) => {
   <>     
   <Link to={`${data._id}`}>
         <div className="h-full  bg-surface-200 rounded-lg overflow-hidden shadow-inner shadow-slate-400">
-          <img className="lg:h-48 md:h-48 h-44 w-full object-cover object-center" src={`http://localhost:5000/${data.coverImg}`}   loading='lazy' alt="blog"/>
+          <img className="lg:h-48 md:h-48 h-44 w-full object-cover object-center" src={`https://flexfit-backend.onrender.com/${data.coverImg}`}   loading='lazy' alt="blog"/>
           <div className="px-6 py-4">
             <h2 className="tracking-wider text-xs title-font text-gray-400 mb-1 	text-transform: capitalize">{data.category}</h2>
             <h1 className="title-font text-lg font-medium text-white mb-2 truncate">{data.title}</h1>

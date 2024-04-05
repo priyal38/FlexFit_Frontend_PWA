@@ -15,7 +15,7 @@ const WorkoutCard = ({data }: Props) => {
                 <div className='overflow-hidden h-48'>
                     <img
                         className="w-full h-full object-fill"
-                        src={`http://localhost:5000/${data.thumbnail}`}
+                        src={`https://flexfit-backend.onrender.com/${data.thumbnail}`}
                         loading='lazy'
                     />
                 </div>

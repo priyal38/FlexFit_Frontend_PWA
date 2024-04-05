@@ -67,8 +67,8 @@ const WorkoutDetails = (props: Props) => {
               <ReactPlayer
                 url={video}
                 controls
-                light={<img src={`http://localhost:5000/${workoutDetails.thumbnail}`} alt="Thumbnail" className="w-full h-full"  loading='lazy'/>}
-                muted={true}
+                light={<img src={`https://flexfit-backend.onrender.com/${workoutDetails.thumbnail}`} alt="Thumbnail" className="w-full h-full"  loading='lazy'/>}
+                muted={true}z
 
                 style={{ maxWidth: '100%', height: 'auto', margin: 'auto' }}
               />

@@ -43,7 +43,7 @@ const RecipeDetails = (props: Props) => {
                     <div className='sm:h-[24rem] h-64 w-full mt-2'>
                         <img
                             className="w-full  h-full object-fit rounded-md"
-                            src={`http://localhost:5000/${recipeDetails?.image}`}
+                            src={`https://flexfit-backend.onrender.com/${recipeDetails?.image}`}
                             alt="Image not loading"
                         />
                     </div>

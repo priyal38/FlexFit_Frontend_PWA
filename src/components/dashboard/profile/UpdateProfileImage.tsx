@@ -120,7 +120,7 @@ const {auth , setAuth} = useAuth()
 
                         <img
                             className="h-32 w-32 rounded-full border-4 border-surface-300 mx-auto my-4"
-                            src={profilePhoto ? `http://localhost:5000/${profilePhoto}` : defaultuser}
+                            src={profilePhoto ? `https://flexfit-backend.onrender.com/${profilePhoto}` : defaultuser}
                             alt=""
                         />
 

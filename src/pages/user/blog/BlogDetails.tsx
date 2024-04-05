@@ -49,7 +49,7 @@ const BlogDetails = (props: Props) => {
                 </div>
 
                 <div className='sm:h-[24rem] h-64 w-full mt-2'>
-                    <img src={`http://localhost:5000/${blogDetails?.coverImg}`} className="w-full  h-full object-fit rounded-md "  loading='lazy' />
+                    <img src={`https://flexfit-backend.onrender.com/${blogDetails?.coverImg}`} className="w-full  h-full object-fit rounded-md "  loading='lazy' />
                 </div>
             <div className="flex py-2 mt-4 px-4 lg:px-0 ">
                 <img src="https://randomuser.me/api/portraits/women/97.jpg"

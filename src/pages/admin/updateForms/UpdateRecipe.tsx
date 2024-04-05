@@ -430,7 +430,7 @@ const UpdateHealthyRecipes = (props: Props) => {
               <div className='h-56'>
 
                 <img
-                  src={`http://localhost:5000/${image}`}
+                  src={`https://flexfit-backend.onrender.com/${image}`}
                   alt="Current Thumbnail"
                   className=" w-full h-full object-fill "
                 />
