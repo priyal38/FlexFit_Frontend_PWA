@@ -25,13 +25,14 @@ const Blog: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
   const [searchParams] = useSearchParams();
   const { currentPage, totalPages, handlePageChange, updateTotalPages } = usePagination();
-  const {loading , stopLoading} = useLoading();
+  const {loading , startLoading, stopLoading} = useLoading();
   const axiosPrivate = useAxiosPrivate();
   const perPage = 3;
 
 
   const getBlogData = async () => {
     try {
+      startLoading()
       const queryParamValue = searchParams.get('q');
       const response = await axiosPrivate.get('/blog/getblog' , {
         params: {
@@ -44,12 +45,14 @@ const Blog: React.FC = () => {
       
       setBlogs(response.data.data.blogs);
       updateTotalPages(response.data.data.totalPages);
-    stopLoading();
+   
     } 
     catch (error) {
       console.error('Error fetching blogs:', error);
       setBlogs([])
      
+    }finally {
+      stopLoading(); // Stop loading regardless of success or failure
     }
   };
   

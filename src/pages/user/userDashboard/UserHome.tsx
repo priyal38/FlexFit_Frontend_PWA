@@ -39,7 +39,7 @@ const UserHome = () => {
   const [chartData, setChartData] = useState<UserWorkoutData[]>([])
   const [cardData, setCardData] = useState<UserWorkoutData[]>([])
   const axiosPrivate = useAxiosPrivate();
-  const { loading, stopLoading } = useLoading();
+  const [loading, setLoading] = useState(true);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
@@ -54,7 +54,7 @@ const UserHome = () => {
       });
       console.log(response)
       setChartData(response.data.data);
-      stopLoading()
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching workouts:', error);
     }
@@ -74,7 +74,7 @@ const UserHome = () => {
       const response = await axiosPrivate.get(`/progress/getcarddata`);
       console.log(response)
       setCardData(response.data.data);
-      stopLoading()
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching workouts:', error);
     }

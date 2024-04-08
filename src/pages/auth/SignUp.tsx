@@ -13,6 +13,8 @@ import Footer from '../../components/LandingPage/Footer';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import { axiosCustom } from '../../axios/axios';
+import { LuLoader2 } from 'react-icons/lu';
+import useLoading from '../../hooks/useLoading';
 
 const schema = yup.object().shape({
     firstname: yup.string().required('First name is required'),
@@ -40,7 +42,7 @@ const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
-  
+    const {loading , startLoading , stopLoading} = useLoading()
     const handleTogglePassword = () => {
         setShowPassword(!showPassword); // Toggle showPassword state
     };
@@ -52,7 +54,7 @@ const SignUp = () => {
     const onSubmit = async (data: FormData) => {
 
         const { confirmPassword, ...formData } = data;
-
+startLoading();
         try {
             const response = await axiosCustom.post('/auth/signup', formData);
             console.log(response);
@@ -66,7 +68,9 @@ const SignUp = () => {
             if (error.response && error.response.status === 409) {
                 toast.error(error.response.data.message); // Show toast message if username already exists
             }
-        }
+        }finally {
+          stopLoading()// Stop loading regardless of success or failure
+          }
     }
     return (
         <>
@@ -145,9 +149,16 @@ const SignUp = () => {
                                 {errors.confirmPassword && <span className="text-sm text-red-500 italic">{errors.confirmPassword.message}</span>}
                             </div>
 
-                            <div className="mb-4  text-center">
-                                <button className="bg-primary-300 hover:bg-primary-200 w-full text-white font-medium tracking-wider py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline" type="submit">Sign Up</button>
-                            </div>
+                            <div className="mb-4 text-center">
+                {loading ? (
+                  <button disabled type="button" className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider">
+                    <LuLoader2 className='inline w-4 h-4 me-3 text-white animate-spin' />
+
+                  </button>
+                ) : (
+                  <button className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider" type="submit"> SignUp</button>
+                )}
+              </div>
                             <div className="text-center">
                                 <Link to="/login" className="inline-block align-baseline text-sm text-primary-600 hover:underline">Already have an account? Sign in</Link>
                             </div>

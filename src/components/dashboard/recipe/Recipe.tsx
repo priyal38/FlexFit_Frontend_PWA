@@ -43,11 +43,12 @@ const Recipe = (props: Props) => {
   const axiosPrivate = useAxiosPrivate()
   const [searchParams] = useSearchParams();
   const { currentPage, totalPages, handlePageChange, updateTotalPages } = usePagination();
-  const {loading , stopLoading} =useLoading()
+  const {loading ,startLoading, stopLoading} =useLoading()
   const perPage = 3
 
   const getRecipes = async () => {
     try {
+      startLoading()
       const queryParamValue = searchParams.get('q');
       const response = await axiosPrivate.get('/recipe/getrecipe', {
         params: {
@@ -58,7 +59,7 @@ const Recipe = (props: Props) => {
       })
       setRecipes(response.data.data.recipes);
       updateTotalPages(response.data.data.totalPages);
-      stopLoading()
+  
 
 
     }
@@ -66,6 +67,8 @@ const Recipe = (props: Props) => {
       console.error('Error fetching recipes:', error);
       setRecipes([]);
      
+    }finally {
+      stopLoading(); // Stop loading regardless of success or failure
     }
   };
 

@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/LandingPage/Header';
 import Footer from '../../components/LandingPage/Footer';
 import { axiosPrivate } from '../../axios/axios';
+import { LuLoader2 } from 'react-icons/lu';
+import useLoading from '../../hooks/useLoading';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -31,7 +33,7 @@ const ForgotPass = () => {
    const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
-
+  const {loading , startLoading , stopLoading} = useLoading()
   
  
 
@@ -39,7 +41,7 @@ const ForgotPass = () => {
   const onSubmit = async (data:FormInput) => {
   
     try {
-
+startLoading();
 
 
       const response = await axiosCustom.post('/auth/forgot', data);
@@ -58,6 +60,9 @@ const ForgotPass = () => {
       if (error.response && error.response.status === 500) {
         toast.error(error.response.data.message);
       }
+    
+    }finally {
+     stopLoading(); // Stop loading regardless of success or failure
     }
   };
   
@@ -91,8 +96,15 @@ const ForgotPass = () => {
               {errors.confirmPassword && <p className="text-red-500 text-sm italic">{errors.confirmPassword.message}</p>}
             </div>
             <div className="mb-4 text-center">
-              <button className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider" type="submit">Submit</button>
-            </div>
+                {loading ? (
+                  <button disabled type="button" className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider">
+                    <LuLoader2 className='inline w-4 h-4 me-3 text-white animate-spin' />
+
+                  </button>
+                ) : (
+                  <button className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider" type="submit"> Submit</button>
+                )}
+              </div>
            
           </form>
         </div>

@@ -27,11 +27,12 @@ const AdminHome = (props: Props) => {
     userworkouts: 0,
     workouts: 0
   });
-  const { loading, stopLoading } = useLoading();
+  const { loading,startLoading, stopLoading } = useLoading();
   const axiosPrivate = useAxiosPrivate();
 
   const getCardData = async () => {
     try {
+      startLoading()
       const response = await axiosPrivate.get('/admin/getallcarddata')
 
       setCardData(response.data.data)

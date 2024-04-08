@@ -25,7 +25,7 @@ const SelectedWorkoutTable = ({ selectedDate, onDateChange, updateChartData, upd
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
     const { currentPage, totalPages, handlePageChange, updateTotalPages } = usePagination();
-    const { loading, stopLoading } = useLoading();
+    const { loading, startLoading , stopLoading } = useLoading();
     const [tabledata, setTableData] = useState<UserWorkoutData[]>([])
     const [editWorkout, setEditWorkout] = useState<UserWorkoutData | null>(null);
     const perPage = 3
@@ -71,6 +71,7 @@ const SelectedWorkoutTable = ({ selectedDate, onDateChange, updateChartData, upd
 
     const getTableData = async (date: string) => {
         try {
+            startLoading();
             const response = await axiosPrivate.get(`/progress/gettabledata`, {
                 params: {
                     selectedDate: date,

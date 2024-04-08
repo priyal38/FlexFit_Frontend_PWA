@@ -39,11 +39,12 @@ const Workout = () => {
   });
   const [searchParams] = useSearchParams();
   const { currentPage, totalPages, handlePageChange, updateTotalPages } = usePagination();
-  const {loading  , stopLoading} = useLoading()
+  const {loading , startLoading , stopLoading} = useLoading()
   const perPage = 6;
 
   const getWorkoutData = async () => {
     try {
+      startLoading();
       console.log(filterOptions.selectedCategories);
       console.log( filterOptions.selectedSubcategories);
       console.log(filterOptions.selectedSubcategories);
@@ -63,11 +64,13 @@ const Workout = () => {
 
       setWorkouts(response.data.data.workouts);
       updateTotalPages(response.data.data.totalPages);
-      stopLoading()
+     
     } catch (error) {
       console.error('Error fetching workouts:', error);
       setWorkouts([]);
       
+    }finally {
+      stopLoading(); 
     }
   };
 

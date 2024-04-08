@@ -15,6 +15,9 @@ import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { axiosCustom } from '../../axios/axios';
+import useLoading from '../../hooks/useLoading';
+import Loading from '../../components/dashboard/common/Loading';
+import { LuLoader2 } from "react-icons/lu";
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -33,7 +36,7 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
-
+  const {loading , startLoading , stopLoading} = useLoading()
   const { auth, setAuth } = useAuth();
 
   useEffect(() => {
@@ -49,14 +52,14 @@ const Login = () => {
   const onSubmit = async (data: LoginFormInputs) => {
 
     try {
-
+startLoading()
       const response = await axiosCustom.post('/auth/login', data, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });
-console.log(response)
+      console.log(response)
       const { token } = response.data;
-      const {role , email , firstname , lastname , profilePhoto} = response.data.user;
+      const { role, email, firstname, lastname, profilePhoto } = response.data.user;
       const username = firstname + " " + lastname;
       console.log(username)
 
@@ -65,7 +68,7 @@ console.log(response)
         window.localStorage.setItem(
           'user',
           JSON.stringify({
-            role, token , email , username  , profilePhoto
+            role, token, email, username, profilePhoto
           }),
         );
 
@@ -75,13 +78,12 @@ console.log(response)
             email,
             role,
             token,
-            image:profilePhoto
+            image: profilePhoto
           },
-          
         })
 
 
-    toast.success("Login successfull")
+        toast.success("Login successfull")
 
         if (response.data.user.role === 1) {
           navigate('/admin')
@@ -92,13 +94,16 @@ console.log(response)
 
       }
 
-  
+
     }
     catch (error: any) {
       console.error(error);
       if (error.response && error.response.status === 500) {
         toast.error(error.response.data.message);
       }
+    }
+    finally {
+     stopLoading()
     }
   };
 
@@ -130,37 +135,44 @@ console.log(response)
                     <MdEmail className='h-6 w-6' />
                   </span>
                   <input type="text"  {...register('email')} className="rounded-none rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-surface-200  border-gray-600 placeholder-gray-200 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Enter email" />
-        
+
                 </div>
-                  {errors.email && <p className="text-red-500 text-sm italic">{errors.email.message}</p>}
+                {errors.email && <p className="text-red-500 text-sm italic">{errors.email.message}</p>}
               </div>
-     
 
-<div className=" mb-4">
-<label htmlFor="password" className="block mb-2 text-sm font-medium text-white">Password</label>
 
-      <div className="flex">
-        <span className="inline-flex items-center px-3 text-sm border border-e-0 rounded-l-md bg-surface-200 text-gray-400 border-gray-600">
-          <RiLockPasswordFill className='h-6 w-6' />
-        </span>
-        <div className='relative w-full'>
-        <input type={showPassword ? 'text' : 'password'}   {...register('password')} className="rounded-none rounded-e-lg border block  min-w-0 w-full text-sm p-2.5  bg-surface-200 border-gray-600 placeholder-gray-200 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Enter Password" />
-       
-        {/* Show eye icon in the input field */}
-        <div className="absolute items-center end-0 top-0 mt-3 justify-center pr-5">
-          {showPassword ? (
-            <FaEye className="text-gray-400 w-5 h-5 cursor-pointer" onClick={handleTogglePassword} />
-          ) : (
-            <FaEyeSlash className="text-gray-400  w-5 h-5 cursor-pointer" onClick={handleTogglePassword} />
-          )}
-        </div>
-        </div>
-      </div>
-    {errors.password && <p className="text-red-500 text-sm italic">{errors.password.message}</p>} 
-    </div>
+              <div className=" mb-4">
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">Password</label>
+
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 text-sm border border-e-0 rounded-l-md bg-surface-200 text-gray-400 border-gray-600">
+                    <RiLockPasswordFill className='h-6 w-6' />
+                  </span>
+                  <div className='relative w-full'>
+                    <input type={showPassword ? 'text' : 'password'}   {...register('password')} className="rounded-none rounded-e-lg border block  min-w-0 w-full text-sm p-2.5  bg-surface-200 border-gray-600 placeholder-gray-200 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Enter Password" />
+
+                    {/* Show eye icon in the input field */}
+                    <div className="absolute items-center end-0 top-0 mt-3 justify-center pr-5">
+                      {showPassword ? (
+                        <FaEye className="text-gray-400 w-5 h-5 cursor-pointer" onClick={handleTogglePassword} />
+                      ) : (
+                        <FaEyeSlash className="text-gray-400  w-5 h-5 cursor-pointer" onClick={handleTogglePassword} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {errors.password && <p className="text-red-500 text-sm italic">{errors.password.message}</p>}
+              </div>
 
               <div className="mb-4 text-center">
-                <button className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider" type="submit"> Login</button>
+                {loading ? (
+                  <button disabled type="button" className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider">
+                    <LuLoader2 className='inline w-4 h-4 me-3 text-white animate-spin' />
+
+                  </button>
+                ) : (
+                  <button className="bg-primary-400 hover:bg-primary-200  w-full text-white font-medium py-2 px-3 rounded-lg focus:outline-none focus:shadow-outline text-lg tracking-wider" type="submit"> Login</button>
+                )}
               </div>
               <div className='flex justify-between'>
                 <div className="text-center">
@@ -169,10 +181,12 @@ console.log(response)
                 <div className="text-center">
                   <Link to="/signup" className="inline-block align-baseline text-sm text-primary-600 hover:underline">Don't have an account? Sign Up</Link>
                 </div>
+
+
               </div>
             </form>
           </div>
-        
+
         </div>
       </div>
       <Footer />
