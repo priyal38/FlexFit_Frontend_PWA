@@ -62,8 +62,10 @@ const WorkoutDetails = (props: Props) => {
                 light={<img src={`http://localhost:5000/${workoutDetails.thumbnail}`} alt="Thumbnail" className="w-full h-full"  loading='lazy'/>}
                 muted={true}
 
-                style={{ maxWidth: '100%', height: 'auto', margin: 'auto' }}
+                style={ maxWidth: '100%', height: 'auto', margin: 'auto' }}
               /> */}
+
+              
               <ReactPlayer
                 url={video}
                 controls
