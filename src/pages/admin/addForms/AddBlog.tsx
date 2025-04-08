@@ -248,6 +248,7 @@ const AddBlog = (props: Props) => {
     type="button"
     value="Add Blog"
     onClick={handleSubmit(onSubmit)}
+    name='Add Blog'
     className="bg-surface-200 cursor-pointer text-white py-2 px-4 rounded hover:bg-surface-200 focus:outline-none focus:shadow-outline"
   />
 {/*             <button
