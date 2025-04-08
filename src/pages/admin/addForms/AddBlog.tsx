@@ -74,6 +74,7 @@ const AddBlog = (props: Props) => {
               Title
             </label>
             <input
+              id='title'
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text" {...register("title", {
                 required: "title required"
@@ -89,6 +90,7 @@ const AddBlog = (props: Props) => {
                 Category
               </label>
               <select
+                id='category'
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 {...register("category" , {
                   required: "category required"
@@ -110,6 +112,7 @@ const AddBlog = (props: Props) => {
               Author
             </label>
             <input
+               id='author'
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text" {...register("author", {
                 required: "author required"
@@ -123,6 +126,7 @@ const AddBlog = (props: Props) => {
               Subtitle
             </label>
             <input
+               id='subtitle'
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text" {...register("subtitle")} />
              
@@ -152,6 +156,7 @@ const AddBlog = (props: Props) => {
                   {field.value.map((content: string, index: number) => (
                     <div key={index} className="flex mb-2">
                       <input
+                        id='content'
                         type="text"
                         {...field}
                         value={content}
@@ -200,6 +205,7 @@ const AddBlog = (props: Props) => {
               Readtime (Minutes)
             </label>
             <input
+                id='readtime'
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text" {...register("readtime", {
                 required: "readtime required" , min:"1"
@@ -217,17 +223,20 @@ const AddBlog = (props: Props) => {
            
 
 <input
+  id='coverImg'
     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    {...register("coverImg", {
-      required: "Image is required",
-      validate: {
-        lessThan10MB: files => files[0]?.size <= 1024 * 1024 ||  "Image size should be less than 1 MB",
-        acceptedFormats: files =>
-          ['image/jpeg', 'image/png', 'image/gif'].includes(
-            files[0]?.type
-          ) ||  "Only JPG, JPEG, and PNG file types are allowed",
-      },
-    })}
+    {...register("coverImg", 
+    //              {
+    //   required: "Image is required",
+    //   validate: {
+    //     lessThan10MB: files => files[0]?.size <= 1024 * 1024 ||  "Image size should be less than 1 MB",
+    //     acceptedFormats: files =>
+    //       ['image/jpeg', 'image/png', 'image/gif'].includes(
+    //         files[0]?.type
+    //       ) ||  "Only JPG, JPEG, and PNG file types are allowed",
+    //   },
+    // }
+                )}
     type="file"
   />
               {errors.coverImg && <p className="text-red-600 text-xs italic ">{errors.coverImg.message}</p>}
